@@ -31,4 +31,4 @@ any of these...
 if nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about
 
 ## Author
-[@noahcoad](http://twitter.com/noahcoad) writes software for the heck of it and to make life just a little more efficient.
+[@noahcoad](http://twitter.com/noahcoad) writes software for the heck of it and to make life just a little more efficient.  You may also like this [Open URL](https://github.com/noahcoad/open-url) sublime package.
