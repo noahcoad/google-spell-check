@@ -2,7 +2,7 @@
 (a Sublime Text 2 Plugin Package)
 
 ## Description
-Replaces the selected text with Google's spelling correction.  Use Google magic to fix spelling.  Google has a far better spell checker than most tools.  This does _not_ replace the built-in spell checker, offer suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with a Google search page result's magically usually right recommended spelling (or does nothing if Google thinks you've got it right).
+Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  This does _not_ replace the built-in spell checker, offer suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with a Google search page result's magically usually right recommended spelling (or does nothing if Google thinks you've got it right).
 
 There are several problems with most typical spell checkers:
 
@@ -31,4 +31,4 @@ any of these...
 if nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about
 
 ## Author
-[Noah Coad](http://coad.net) writes software for the heck of it and to make life more efficient.  Follow me on twitter [@noahcoad](http://twitter.com/noahcoad) or [my blog](http://coadblog.com).
+[@noahcoad](http://twitter.com/noahcoad) writes software for the heck of it and to make life just a little more efficient.
