@@ -1,5 +1,5 @@
-# Google Spell Check  
-Sublime Text 2 Plugin Package
+# Google Spell Check
+# a Sublime Text 2 Plugin Package
 
 ## Description
 Replaces the selected text with Google's spelling correction.  Use Google magic to fix spelling.  Google has a far better spell checker than most tools.  This does _not_ replace the built-in spell checker, offer suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with a Google search page result's magically usually right recommended spelling (or does nothing if Google thinks you've got it right).
@@ -18,7 +18,7 @@ BTW, this uses a standard Google search page results instead of the Google API. 
 any of these...
 * Get through the awesome Sublime [Package Control](http://wbond.net/sublime_packages/package_control) as Google Spell Check
 * Git clone into your sublime packages folder  
-'git clone https://github.com/noahcoad/google-spell-check.git'
+```git clone https://github.com/noahcoad/google-spell-check.git```
 * Download and unpack into your sublime packages folder
 
 ## How to Use
