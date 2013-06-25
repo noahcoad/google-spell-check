@@ -19,7 +19,7 @@ any of these...
 * Get through the awesome Sublime [Package Control](http://wbond.net/sublime_packages/package_control) as Google Spell Check
 * Git clone into your sublime packages folder  
 ```git clone https://github.com/noahcoad/google-spell-check.git```
-* (Download)[https://github.com/noahcoad/google-spell-check/archive/master.zip] and unpack into your sublime packages folder
+* [Download](https://github.com/noahcoad/google-spell-check/archive/master.zip) and unpack into your sublime packages folder
 
 ## How to Use
 1. Select some text in the editor
