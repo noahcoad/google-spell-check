@@ -30,5 +30,7 @@ any of these...
 1. be patient, may take a second for google to return a result  
 if nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about
 
-## Author
-[@noahcoad](http://twitter.com/noahcoad) writes software for the heck of it and to make life just a little more efficient.  You may also like this [Open URL](https://github.com/noahcoad/open-url) sublime package.
+## Other
+See also: You may like this [Open URL](https://github.com/noahcoad/open-url) sublime package.
+
+Author: [@noahcoad](http://twitter.com/noahcoad) writes software for the heck of it and to make life just a little more efficient.  
