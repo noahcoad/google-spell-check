@@ -2,7 +2,9 @@
 (a Sublime Text 2 Plugin Package)
 
 ## Description
-Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  This does _not_ replace the built-in spell checker, offer suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with a Google search page result's magically usually right recommended spelling (or does nothing if Google thinks you've got it right).
+Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  
+
+This does _not_ replace the built-in spell checker, offer a list of suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with the Google search page's recommended spelling.  It's like magic.  Outright uncanny how accurate Google can be.  Text isn't affected if Google thinks you've got it right.
 
 There are several problems with most typical spell checkers:
 
