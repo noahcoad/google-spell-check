@@ -2,8 +2,8 @@ import sublime, sublime_plugin, urllib2, re
 
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		if self.view.sel()[0].a == self.view.sel()[0].b:
-			sublime.message_dialog("Google Spell Check: please select some text to fix first")
+		if len(self.view.sel()) == 1 and self.view.sel()[0].a == self.view.sel()[0].b:
+			self.view.run_command("expand_selection", {"to": "word"})
 
 		for sel in self.view.sel():
 			if sel.empty():
