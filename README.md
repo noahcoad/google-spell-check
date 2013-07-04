@@ -4,6 +4,8 @@
 ## Description
 Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  
 
+**Watch this 1.5 min video [showing it in action](http://screencast.com/t/AyXPaPLWdxtg).**
+
 This does _not_ replace the built-in spell checker, offer a list of suggestions, or adds words to the built-in dictionary.  Instead it replaces the selected text with the Google search page's recommended spelling.  It's like magic.  Outright uncanny how accurate Google can be.  Text isn't affected if Google thinks you've got it right.
 
 There are several problems with most typical spell checkers:
@@ -30,7 +32,7 @@ any of these...
   * via right-click context menu > Google Spell Check
   * via Command Pallet, ctrl+shift+p (command+shift+p in OSX) > Google Spell Check
 1. be patient, may take a second for google to return a result  
-if nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about
+If nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about.  Try selecting some more words to give google context.
 
 ## Finally
 See also: You may like this [Open URL](https://github.com/noahcoad/open-url) sublime package.
