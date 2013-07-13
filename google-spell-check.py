@@ -1,3 +1,6 @@
+# Replaces the word under the cursor or selection with Google Search's recommended spelling
+# Hosted at http://github.com/noahcoad/google-spell-check
+
 import sublime, sublime_plugin, urllib2, re
 
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
@@ -45,3 +48,9 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		html = str(page.read())
 		page.close()
 		return html
+
+# p.s. Yes, I'm using hard tabs for indentation.  bite me
+# set tabs to whatever level of indentation you like in your editor 
+# for crying out loud, at least they're consistent here, and use 
+# the ST2 command "Indentation: Convert to Spaces", which will convert
+# to spaces if you really need to be part of the 'soft tabs only' crowd =)
