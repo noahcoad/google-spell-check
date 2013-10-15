@@ -1,4 +1,5 @@
-# Google Spell Check - a Sublime Text Package
+# Google Spell Check
+a Sublime Text Package
 
 ## Description
 Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  
