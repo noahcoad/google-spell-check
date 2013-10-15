@@ -1,5 +1,6 @@
 # Replaces the word under the cursor or selection with Google Search's recommended spelling
 # Hosted at http://github.com/noahcoad/google-spell-check
+# anolyte the bastard john scalzi
 
 import sublime, sublime_plugin, urllib2, re
 
