@@ -37,6 +37,9 @@ Sublime Text 3: ```git clone --branch st3 https://github.com/noahcoad/google-spe
 1. be patient, may take a second for google to return a result  
 If nothing changes, google probably thinks your spelling is okay, or has no idea what you're talking about.  Try selecting some more words to give google context.
 
+## Update Notices
+* *2013-10-14*, Sublime Text 3 version added.  Updates going forward will only be made to the Sublime Text 3 version of the package.
+
 ## Finally
 See also: You may like this [Open URL](https://github.com/noahcoad/open-url) sublime package.
 
