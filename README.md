@@ -23,10 +23,10 @@ BTW, this uses a standard Google search page results instead of the Google API. 
 ## Installation
 any of these...
 * Get through the awesome Sublime [Package Control](http://wbond.net/sublime_packages/package_control) as Google Spell Check (pending approval from [wbond](https://github.com/wbond))
+* Download and unpack into your sublime packages folder a version for: [Sublime Text 2](https://github.com/noahcoad/google-spell-check/archive/st2.zip) or [Sublime Text 3](https://github.com/noahcoad/google-spell-check/archive/st3.zip)
 * Git clone into your sublime packages folder  
 Sublime Text 2: ```git clone --branch st2 https://github.com/noahcoad/google-spell-check.git```  
 Sublime Text 3: ```git clone --branch st3 https://github.com/noahcoad/google-spell-check.git```  
-* [Download](https://github.com/noahcoad/google-spell-check/archive/master.zip) and unpack into your sublime packages folder
 
 ## How to Use
 1. Select some text in the editor or put cursor under a word to check
