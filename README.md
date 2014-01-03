@@ -30,7 +30,7 @@ Sublime Text 3: ```git clone --branch st3 https://github.com/noahcoad/google-spe
 
 ## How to Use
 1. Select some text in the editor or put cursor under a word to check
-1. Run the google_spell_correct command
+1. Run the google_spell_check command
   * via hotkey ctrl+alt+g
   * via right-click context menu > Google Spell Check
   * via Command Pallet, ctrl+shift+p (command+shift+p in OSX) > Google Spell Check
