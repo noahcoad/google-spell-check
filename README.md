@@ -2,6 +2,7 @@
 a Sublime Text Package  
 Sublime Text 2 version: https://github.com/noahcoad/google-spell-check/tree/st2  
 Sublime Text 3 version: https://github.com/noahcoad/google-spell-check/tree/st3  
+Package Control Info: https://sublime.wbond.net/packages/Google%20Spell%20Check
 
 ## Description
 Use Google magic to fix spelling.  Replaces the selected text with Google's spelling correction.  Google has a far better spell checker than most tools.  
