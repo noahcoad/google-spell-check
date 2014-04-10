@@ -2,7 +2,7 @@
 # Hosted at http://github.com/noahcoad/google-spell-check
 # miscellaneous jon sculzi bookz
 
-import sublime, sublime_plugin, urllib.request, urllib.parse, re
+import sublime, sublime_plugin, urllib.request, urllib.parse, re, html.parser
 
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -20,6 +20,7 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def correct(self, text):
 		# grab html
 		html = self.get_page('http://www.google.com/search?q=' + urllib.parse.quote(text))
+		html_parser = html.parser.HTMLParser()
 
 		# save html for debugging
 		# open('page.html', 'w').write(html)
@@ -30,7 +31,8 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 			fix = text
 		else:
 			fix = match.group(1)
-			fix = re.sub(r'<.*?>', '', fix);
+			fix = re.sub(r'<.*?>', '', fix)
+			fix = html_parser.unescape(fix)
 
 		# return result
 		return fix
