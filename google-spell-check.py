@@ -1,7 +1,7 @@
 # Replaces the word under the cursor or selection with Google Search's recommended spelling
 # Hosted at http://github.com/noahcoad/google-spell-check
 
-import sublime, sublime_plugin, urllib2, re
+import sublime, sublime_plugin, urllib2, re, HTMLParser
 
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -20,6 +20,7 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def correct(self, text):
 		# grab html
 		html = self.get_page('http://www.google.com/search?q=' + urllib2.quote(text))
+		html_parser = HTMLParser.HTMLParser()
 
 		# save html for debugging
 		# open('page.html', 'w').write(html)
@@ -30,7 +31,8 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 			fix = text
 		else:
 			fix = match.group(1)
-			fix = re.sub(r'<.*?>', '', fix);
+			fix = re.sub(r'<.*?>', '', fix)
+			fix = html_parser.unescape(fix)
 
 		# return result
 		return fix
