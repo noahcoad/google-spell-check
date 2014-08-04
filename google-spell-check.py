@@ -43,7 +43,6 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		# include "Including results for" results and gives back a different set of results
 		# than using the updated user_agent yanked from chrome's headers
 		# user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-		print url
 		user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36'
 		headers = {'User-Agent':user_agent,}
 		req = urllib2.Request(url, None, headers)
