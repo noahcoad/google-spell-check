@@ -1,0 +1,13 @@
+created by Noah Coad 2013-06-24 02:39pm
+
+posted at https://github.com/noahcoad/google-spell-check
+
+ideas for improvement
+	status
+		give some notice it's working when looking up a google result
+		it's unclear if an update is waiting from google or google is cool with the spelling, make the difference more obvious
+	error handling
+		let the user know if their internet connection
+
+revision log
+	2013-06-25 10:24pm, now selects word under cursor if there is no text selected 

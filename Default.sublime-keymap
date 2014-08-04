@@ -1,0 +1,3 @@
+[
+	{ "keys": ["ctrl+alt+g"], "command": "google_spell_check" }
+]
