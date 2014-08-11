@@ -19,14 +19,14 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 
 	def correct(self, text):
 		# grab html
-		html = self.get_page('http://www.google.com/search?q=' + urllib.parse.quote(text))
+		html_result = self.get_page('http://www.google.com/search?q=' + urllib.parse.quote(text))
 		html_parser = html.parser.HTMLParser()
 
 		# save html for debugging
 		# open('page.html', 'w').write(html)
 
 		# pull pieces out
-		match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html)
+		match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html_result)
 		if match is None:
 			fix = text
 		else:
