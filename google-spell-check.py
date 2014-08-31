@@ -26,11 +26,11 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		# open('page.html', 'w').write(html)
 
 		# pull pieces out
-		match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html_result)
+		match = re.search(r'<a.*?\s+class\s+=\s+".*?\bspell\b.*?">(.*?)</a>', html_result).group(1)
 		if match is None:
 			fix = text
 		else:
-			fix = match.group(1)
+			fix = match
 			fix = re.sub(r'<.*?>', '', fix)
 			fix = html_parser.unescape(fix)
 
@@ -39,7 +39,7 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 
 	def get_page(self, url):
 		# the type of header affects the type of response google returns
-		# for example, using the commented out header below google does not 
+		# for example, using the commented out header below google does not
 		# include "Including results for" results and gives back a different set of results
 		# than using the updated user_agent yanked from chrome's headers
 		# user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
@@ -47,12 +47,14 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		headers = {'User-Agent':user_agent,}
 		req = urllib.request.Request(url, None, headers)
 		page = urllib.request.urlopen(req)
-		html = str(page.read())
+		enc = re.findall(r'charset=(.*)', page.getheader('Content-Type'))
+		enc = enc[0] if enc else 'UTF-8'
+		html = page.read().decode(enc)
 		page.close()
 		return html
 
 # p.s. Yes, I'm using hard tabs for indentation.  bite me
-# set tabs to whatever level of indentation you like in your editor 
-# for crying out loud, at least they're consistent here, and use 
+# set tabs to whatever level of indentation you like in your editor
+# for crying out loud, at least they're consistent here, and use
 # the ST2 command "Indentation: Convert to Spaces", which will convert
 # to spaces if you really need to be part of the 'soft tabs only' crowd =)
