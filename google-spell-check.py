@@ -4,6 +4,12 @@
 
 import sublime, sublime_plugin, urllib.request, urllib.parse, re, html.parser
 
+GOOGLE_SEARCH_API_URL = 'https://www.google.com/search?q={query_text}'
+
+DID_YOU_MEAN_REGEXP = re.compile(r'<a[^>]*?\s+class\s*=\s*"[^>]*?\bspell\b[^>]*?"[^>]*?>(.*?)</a>')
+INCLUDING_RESULTS_REGEXP = re.compile(r'<span[^>]*?\s+class\s*=\s*"[^>]*?\bspell\b[^>]*?"[^>]*?>[^>]*?<a[^>]*?>(.*?)</a>')
+SHOWING_RESULTS_REGEXP = INCLUDING_RESULTS_REGEXP
+
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		if len(self.view.sel()) == 1 and self.view.sel()[0].a == self.view.sel()[0].b:
@@ -19,15 +25,25 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 
 	def correct(self, text):
 		# grab html
-		html_result = self.get_page('http://www.google.com/search?q=' + urllib.parse.quote(text))
+		url =  GOOGLE_SEARCH_API_URL.format(query_text=urllib.parse.quote(text))
+		html_result = self.get_page(url)
 		html_parser = html.parser.HTMLParser()
 
 		# save html for debugging
 		# open('page.html', 'w').write(html)
 
 		# pull pieces out
-		match = re.search(r'<a.*?\s+class\s+=\s+".*?\bspell\b.*?">(.*?)</a>', html_result).group(1)
-		if match is None:
+		did_you_mean_match = DID_YOU_MEAN_REGEXP.search(html_result)
+		including_results_match = INCLUDING_RESULTS_REGEXP.search(html_result)
+		showing_results_match = SHOWING_RESULTS_REGEXP.search(html_result)
+		match = None
+		if did_you_mean_match:
+			match = match or did_you_mean_match.group(1)
+		if including_results_match:
+			match = match or including_results_match.group(1)
+		if showing_results_match:
+			match = match or showing_results_match.group(1)
+		if not match:
 			fix = text
 		else:
 			fix = match
