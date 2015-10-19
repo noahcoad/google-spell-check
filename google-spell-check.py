@@ -26,7 +26,7 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		# open('page.html', 'w').write(html)
 
 		# pull pieces out
-		match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?>(.*?)</a>', html_result)
+		match = re.search(r'(?:Showing results for|Did you mean|Including results for)[^\0]*?<a.*?><b.*?><i.*?>(.*?)</i>', html_result)
 		if match is None:
 			fix = text
 		else:
