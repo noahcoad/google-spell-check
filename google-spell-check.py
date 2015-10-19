@@ -19,7 +19,7 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 
 	def correct(self, text):
 		# grab html
-		html_result = self.get_page('http://www.google.com/search?q=' + urllib.parse.quote(text))
+		html_result = self.get_page('http://www.google.com/search?hl=en&q=' + urllib.parse.quote(text))
 		html_parser = html.parser.HTMLParser()
 
 		# save html for debugging
