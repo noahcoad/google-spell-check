@@ -21,7 +21,6 @@ class GoogleSpellCheckCommand(sublime_plugin.TextCommand):
 		# grab html
 		html_result = self.get_page('http://www.google.com/search?hl=en&q=' + urllib.parse.quote(text))
 		html_parser = html.parser.HTMLParser()
-		print(html_result)
 
 		start_google_suggestion = html_result.find('<a class="spell" href=')
 
