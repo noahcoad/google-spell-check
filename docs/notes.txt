@@ -1,0 +1,34 @@
+created by Noah Coad 2013-06-24 02:39pm
+
+posted at https://github.com/noahcoad/google-spell-check
+
+ideas for improvement
+	status
+		[done 2026-07-27] give some notice it's working when looking up a google result
+		[done 2026-07-27] it's unclear if an update is waiting from google or google is cool with the spelling, make the difference more obvious
+	error handling
+		[done 2026-07-27] let the user know if their internet connection
+	remaining
+		optional setting to show a suggestion list instead of replacing silently
+		cache lookups per session so re-running on the same word doesn't re-hit google
+		suggest endpoint returns HTTP 500 under rapid-fire use, consider a retry w/ backoff
+
+revision log
+	2013-06-25 10:24pm, now selects word under cursor if there is no text selected
+	2013-10-14, sublime text 3 version added on the st3 branch
+	2026-07-27, rewritten for python 3 / ST4
+		the old scrape of google's results page for "Did you mean" / "Showing results for"
+		stopped working -- google removed that markup, so the regex never matched and the
+		plugin silently did nothing. verified 0/5 matches on known misspellings.
+		now uses the suggest endpoint w/ client=psy-ab, the one client that returns explicit
+		spell-correction metadata: za = corrected, zb = what you typed. that flag is what
+		makes silent replacement safe -- no flag, no change to your text.
+		fallback accepts a top suggestion only if it reads as a respelling (same word count,
+		small per-word edit distance, same first letter), which stops "receive" -> "received"
+		and stops phrases being extended into a full search query.
+		also: all cursors checked in one pass (replaced back to front), case preserved,
+		leading/trailing whitespace preserved, runs off the UI thread.
+		verified 39/39: 19 misspellings corrected, 20 correct phrases left alone.
+		st2/st3 branches retired, everything on master. package control channel PR:
+		https://github.com/sublimehq/package_control_channel/pull/9501
+		(note: wbond/package_control_channel now redirects to sublimehq/)
