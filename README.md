@@ -29,9 +29,20 @@ If nothing changes, Google thinks your spelling is fine. Select more words to gi
 ## How It Works
 This uses Google's public autocomplete/suggest endpoint (`suggestqueries.google.com`), which returns explicit spell-correction metadata — Google marks *"you typed X, I think you meant Y"*. That flag is what makes silent replacement safe: without it, the plugin doesn't touch your text.
 
-A suggestion is only accepted as a correction when it reads as a respelling — same word count, small per-word edit distance, same first letter. This is what stops Google from "correcting" `receive` into `received`, or `the quick brown fox` into `the quick brown fox jumps over the lazy dog`.
+When Google doesn't flag anything, a suggestion is accepted only if it reads as a respelling — same word count, small per-word edit distance, same first letter. This is what stops Google from "correcting" `receive` into `received`, or `the quick brown fox` into `the quick brown fox jumps over the lazy dog`.
+
+Some misspellings are invisible at phrase level: for `additionassl microcontrollers` Google only offers to extend the phrase, though `additionassl` alone corrects cleanly. So when the phrase as a whole yields no correction, each word is checked on its own (words under 4 characters are skipped, punctuation and spacing are preserved).
 
 No API key required. It isn't an officially supported API, so Google changing their response format could break the plugin.
+
+## Tests
+`tests/test_correct.py` runs the correction logic against the live endpoint, stubbing the `sublime` modules so the plugin imports outside the editor:
+
+```bash
+python3 tests/test_correct.py
+```
+
+Needs a network connection. Covers misspellings that must be corrected, correctly spelled text that must be left untouched, case preservation, and offline input guards.
 
 ## Installation
 * **Package Control** (recommended): `Package Control: Install Package` → **Google Spell Check**
@@ -43,7 +54,7 @@ No API key required. It isn't an officially supported API, so Google changing th
 Requires Sublime Text 3 or later (Python 3.3+ plugin host).
 
 ## Update Notices
-* *2026-07-27*, rewritten for Python 3 / ST4. The old version scraped the Google search results page for "Did you mean" — Google removed that markup, so it silently stopped working. Now uses the suggest endpoint's spell-correction metadata, checks all selections at once, and preserves case. The `st2` and `st3` branches are retired; everything lives on `master`.
+* *2026-07-27* (**v2.0.0**), rewritten for Python 3 / ST4. The old version scraped the Google search results page for "Did you mean" — Google removed that markup, so it silently stopped working. Now uses the suggest endpoint's spell-correction metadata, falls back to per-word checking, checks all selections at once, preserves case and spacing, and reports connection failures instead of failing quietly. The `st2` and `st3` branches are retired; everything lives on `master`.
 * *2013-10-14*, Sublime Text 3 version added.
 
 ## Finally

@@ -40,3 +40,25 @@ revision log
 		candidate SHORTER by a <=2 char tail w/ no space = you typed extra, accept.
 		also added retry w/ backoff after the suite tripped the endpoint's 500s.
 		44 cases pass: 19 misspellings, 18 correct-and-untouched, 5 offline, 2 case.
+	2026-07-27, per-word fallback, tagged v2.0.0
+		"additionassl microcontrollers" exposed a second gap: google's only suggestion for
+		that phrase is an extension ("...are being"), so nothing phrase-level was acceptable,
+		even though "additionassl" alone corrects to "additional" fine. some misspellings
+		are simply invisible at phrase granularity.
+		correct() now tries the phrase, then falls back to checking each word on its own.
+		this forced a distinction between "google has no correction" and "google echoed the
+		text back unchanged" -- both used to be None. the latter is now an AGREE sentinel
+		that skips the per-word pass, so correct text isn't re-examined word by word.
+		per-word pass skips words < 4 chars and non-alpha, keeps punctuation attached, and
+		preserves spacing by splitting on a capturing whitespace pattern (a plain
+		' '.join(src.split()) would collapse runs of spaces).
+		cost: a phrase can now take up to N+1 requests, but only when the phrase-level
+		check comes up empty. this makes the retry/backoff load-bearing rather than
+		precautionary -- the per-session cache in the backlog would cut it down.
+		50 cases pass. the 4 new correct multi-word phrases matter most: the per-word path
+		is the riskiest thing here for silent replacement, so it needs pinning down that it
+		leaves good text alone.
+
+	testing note
+		tests need network and take ~1 min w/ the 0.8s throttle. without the throttle the
+		suggest endpoint 500s partway through a full run.
