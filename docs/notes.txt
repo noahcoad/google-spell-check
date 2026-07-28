@@ -2,16 +2,16 @@ created by Noah Coad 2013-06-24 02:39pm
 
 posted at https://github.com/noahcoad/google-spell-check
 
-ideas for improvement
-	status
-		[done 2026-07-27] give some notice it's working when looking up a google result
-		[done 2026-07-27] it's unclear if an update is waiting from google or google is cool with the spelling, make the difference more obvious
-	error handling
-		[done 2026-07-27] let the user know if their internet connection
-	remaining
+backlog
+	ideas
 		optional setting to show a suggestion list instead of replacing silently
 		cache lookups per session so re-running on the same word doesn't re-hit google
-		suggest endpoint returns HTTP 500 under rapid-fire use, consider a retry w/ backoff
+	done
+		[done 2026-07-27] suggest endpoint returns HTTP 500 under rapid-fire use, retry w/ backoff
+		[done 2026-07-27] give some notice it's working when looking up a google result
+		[done 2026-07-27] it's unclear if an update is waiting from google or google is cool with the spelling, make the difference more obvious
+		[done 2026-07-27] let the user know if their internet connection isn't live
+
 
 revision log
 	2013-06-25 10:24pm, now selects word under cursor if there is no text selected
@@ -32,3 +32,11 @@ revision log
 		st2/st3 branches retired, everything on master. package control channel PR:
 		https://github.com/sublimehq/package_control_channel/pull/9501
 		(note: wbond/package_control_channel now redirects to sublimehq/)
+	2026-07-27, tests/test_correct.py added, live corpus run w/ `python3 tests/test_correct.py`
+		"battery terminalss" exposed a bug: a doubled trailing letter was rejected by the
+		src.startswith(cand) guard, which was there to stop "receive" -> "received".
+		both are a 1-char difference at the end, so the rule had to become asymmetric --
+		candidate LONGER than what you typed = google completing you, reject;
+		candidate SHORTER by a <=2 char tail w/ no space = you typed extra, accept.
+		also added retry w/ backoff after the suite tripped the endpoint's 500s.
+		44 cases pass: 19 misspellings, 18 correct-and-untouched, 5 offline, 2 case.

@@ -3,7 +3,7 @@
 # Hosted at http://github.com/noahcoad/google-spell-check
 
 import sublime, sublime_plugin
-import urllib.request, urllib.parse, json, re, html, threading
+import urllib.request, urllib.parse, json, re, html, threading, time
 
 SUGGEST_URL = 'https://suggestqueries.google.com/complete/search'
 # psy-ab is the only client that returns explicit spell-correction metadata:
@@ -12,6 +12,7 @@ CLIENT = 'psy-ab'
 UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0 Safari/537.36'
 TIMEOUT = 8
 MAX_CHARS = 200
+RETRIES = 3			# the endpoint 500s when hit rapidly, e.g. many selections at once
 
 
 def _detag(s):
@@ -20,9 +21,14 @@ def _detag(s):
 
 def _fetch(text):
 	url = '%s?client=%s&hl=en&gl=us&q=%s' % (SUGGEST_URL, CLIENT, urllib.parse.quote(text))
-	req = urllib.request.Request(url, headers={'User-Agent': UA})
-	with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-		return json.loads(resp.read().decode('utf-8', 'replace'))
+	for attempt in range(RETRIES):
+		try:
+			req = urllib.request.Request(url, headers={'User-Agent': UA})
+			with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+				return json.loads(resp.read().decode('utf-8', 'replace'))
+		except Exception:
+			if attempt == RETRIES - 1: raise
+			time.sleep(0.6 * (attempt + 1))
 
 
 def _lev(a, b):
@@ -40,7 +46,13 @@ def _plausible(src, cand):
 	# anything else is google extending the phrase, not correcting it
 	sw, cw = src.split(), cand.split()
 	if len(sw) != len(cw): return False
-	if cand.startswith(src) or src.startswith(cand): return False
+	# google extending what you typed is a completion, not a correction
+	if cand.startswith(src): return False
+	# you typing extra trailing characters IS a correction ("terminalss" -> "terminals"),
+	# but only for a short tail, so a truncated phrase isn't mistaken for a fix
+	if src.startswith(cand):
+		tail = src[len(cand):]
+		if len(tail) > 2 or ' ' in tail: return False
 	if _lev(src, cand) > max(2, len(src) // 4): return False
 	for a, b in zip(sw, cw):
 		if a == b: continue
