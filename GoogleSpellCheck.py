@@ -13,6 +13,7 @@ UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML,
 TIMEOUT = 8
 MAX_CHARS = 200
 RETRIES = 3			# the endpoint 500s when hit rapidly, e.g. many selections at once
+AGREE = object()	# sentinel: google returned the text unchanged, so leave it alone
 
 
 def _detag(s):
@@ -74,6 +75,17 @@ def correct(text):
 	if not src or len(src) > MAX_CHARS: return None
 	if not re.search(r'[a-zA-Z]', src): return None
 
+	fix = _correct_phrase(src)
+	if fix is AGREE: return None		# google echoed it back, spelling is fine
+	if fix: return fix
+	# google had no correction for the phrase as a whole, so try word by word:
+	# it corrects "additionassl" alone but only offers extensions for
+	# "additionassl microcontrollers"
+	return _correct_words(src)
+
+
+def _correct_phrase(src):
+	"""A respelling of the whole phrase, AGREE if google echoed it back, else None."""
 	data = _fetch(src)
 	rows = data[1] if len(data) > 1 else []
 	low = src.lower()
@@ -93,10 +105,37 @@ def correct(text):
 	for row in rows[:5]:
 		cand = _detag(row[0])
 		cl = cand.lower()
-		if cl == low: return None		# google agrees with the spelling
+		if cl == low: return AGREE		# google offered it back verbatim
 		if _plausible(low, cl): return _match_case(src, cand)
 
 	return None
+
+
+def _correct_words(src):
+	"""Check each word on its own; returns None unless some word was corrected."""
+	words = re.split(r'(\s+)', src)					# keeps the separators, so spacing survives
+	if len(src.split()) < 2: return None
+
+	out = []
+	changed = False
+	for w in words:
+		if not w.strip():
+			out.append(w)
+			continue
+		lead = re.match(r'^\W*', w).group(0)			# keep punctuation attached to the word
+		trail = re.search(r'\W*$', w).group(0)
+		core = w[len(lead):len(w) - len(trail)] if trail else w[len(lead):]
+		if len(core) < 4 or not core.isalpha():
+			out.append(w)
+			continue
+		fix = _correct_phrase(core)
+		if fix and fix is not AGREE:
+			out.append(lead + fix + trail)
+			changed = True
+		else:
+			out.append(w)
+
+	return ''.join(out) if changed else None
 
 
 class GoogleSpellCheckCommand(sublime_plugin.TextCommand):

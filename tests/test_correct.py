@@ -45,6 +45,10 @@ MISSPELLED = [
 	('pyton scrpit', 'python script'),
 	('sublme text', 'sublime text'),
 	('battery terminalss', 'battery terminals'),	# doubled trailing letter
+	# google only offers extensions for the whole phrase, so this needs the
+	# per-word pass; "additionassl" corrects fine on its own
+	('additionassl microcontrollers', 'additional microcontrollers'),
+	('recieve the pakcage', 'receive the package'),	# two bad words in one phrase
 ]
 
 # correctly spelled -- must be left completely alone
@@ -67,6 +71,11 @@ CORRECT = [
 	'Sublime Text',
 	'git rebase',
 	'spell check',
+	# the per-word pass must not "fix" words that are already right
+	'additional microcontrollers',
+	'the microcontroller reads the sensor',
+	'sublime text package control',
+	'wire the terminals to the battery',
 ]
 
 # (input, expected) pairs that don't need the network
